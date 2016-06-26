@@ -21,11 +21,9 @@ public class Main extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(this, this);
 		PluginManager pm = getServer().getPluginManager();
 		Permission BreakBlocks = new Permission("ng.breakblocks");
-		Permission UseSigns = new Permission("ng.usesigns");
 		Permission DropItems = new Permission("ng.dropitems");
 		Permission PlaceBlocks = new Permission("ng.placeblocks");
 		pm.addPermission(BreakBlocks);
-		pm.addPermission(UseSigns);
 		pm.addPermission(DropItems);
 		pm.addPermission(PlaceBlocks);
 		this.saveDefaultConfig();
