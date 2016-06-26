@@ -59,14 +59,14 @@ public class Main extends JavaPlugin implements Listener {
 					p.sendMessage(ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + " " + ChatColor.GREEN.toString() + ChatColor.BOLD + "NoGriefers" + " " + ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + "");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng help");
 					p.sendMessage(ChatColor.GRAY + "Opens this help menu. ");
+					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng sos");
+					p.sendMessage(ChatColor.GRAY + "Activates emergency mode.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng blockbreak <true/false>");
 					p.sendMessage(ChatColor.GRAY + "Enable or disable blockbreak.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng itemdrops <true/false>");
 					p.sendMessage(ChatColor.GRAY + "Enable or disable itemdrops.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng blockplace <true/false>");
 					p.sendMessage(ChatColor.GRAY + "Enable or disable blockplace.");
-					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng sos");
-					p.sendMessage(ChatColor.GRAY + "Activates emergency mode.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng version");
 					p.sendMessage(ChatColor.GRAY + "Shows the version of the plugin.");
 					p.sendMessage(ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + " " + ChatColor.GREEN.toString() + ChatColor.BOLD + "By: Jely2002" + " " + ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + "");
@@ -181,3 +181,6 @@ public class Main extends JavaPlugin implements Listener {
        } else return;
 	}
 }
+
+
+// Test (Hope this shows up on GitHub! XOXO)
