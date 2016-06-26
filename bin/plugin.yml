@@ -1,0 +1,10 @@
+name: NoGriefers
+main: jely2002.bukkit.NoGriefers.Main
+version: 1.0
+commands:
+   ng:
+    description: Alias for NoGriefers
+    usage: §a/<command> help §7Opens the NoGriefers help.
+   sos:
+    description: Activates emergency mode.
+    usage: §a/<command> 
