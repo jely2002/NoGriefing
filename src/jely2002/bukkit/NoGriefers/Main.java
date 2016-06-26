@@ -56,7 +56,7 @@ public class Main extends JavaPlugin implements Listener {
 				}
 
 				if (args[0].equalsIgnoreCase("help")) {
-					p.sendMessage(ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + " " + ChatColor.GREEN.toString() + ChatColor.BOLD + "NoGriefers" + " " + ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + "");
+					p.sendMessage(ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + " " + ChatColor.GREEN.toString() + ChatColor.BOLD + "NoGriefing" + " " + ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + "");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng help");
 					p.sendMessage(ChatColor.GRAY + "Opens this help menu. ");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng sos");
@@ -74,7 +74,7 @@ public class Main extends JavaPlugin implements Listener {
 				}
 
 				if (args[0].equalsIgnoreCase("version")) {
-					p.sendMessage(ChatColor.GREEN + "NoGriefers is on version: " + ChatColor.YELLOW + getDescription().getVersion());
+					p.sendMessage(ChatColor.GREEN + "NoGriefing is on version: " + ChatColor.YELLOW + getDescription().getVersion());
 					return true;
 				}
 				
