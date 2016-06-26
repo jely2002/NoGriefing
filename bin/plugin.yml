@@ -1,7 +1,7 @@
-name: NoGriefers
+name: NoGriefing
 main: jely2002.bukkit.NoGriefers.Main
 version: 1.0
 commands:
    ng:
-    description: Alias for NoGriefers
-    usage: §a/<command> help §7Opens the NoGriefers help.
+    description: Alias for NoGriefing
+    usage: §a/<command> help §7Opens the NoGriefing help.
