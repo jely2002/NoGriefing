@@ -14,7 +14,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin implements Listener {
+public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
@@ -139,44 +139,6 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		return false;
 
-	}
-	
-
-
-
-
-
-	@EventHandler
-	public void blockbreak(BlockBreakEvent e) {
-		Player p = e.getPlayer();
-		if (getConfig().getBoolean("blockbreak") == false){
-			if (p.hasPermission("BreakBlocks")) {
-				return;
-			} else {
-				e.setCancelled(true);	
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("deny-message-blockbreak")));
-			}
-		} else return;
-	}
-
-
-	@EventHandler
-	public void blockplace(BlockPlaceEvent e) {
-		Player p = e.getPlayer();
-				if (getConfig().getBoolean("blockplace") == false  && !p.hasPermission("PlaceBlocks")) {
-					e.setCancelled(true);
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("deny-message-blockplace")));
-				} else return;
-
-			}
-
-	@EventHandler
-	public void dropitems(PlayerDropItemEvent e) {
-		Player p = e.getPlayer();
-		if (getConfig().getBoolean("itemdrops") == false && !p.hasPermission("ItemDrops")) {
-				e.setCancelled(true);
-			    p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("deny-message-itemdrops")));
-       } else return;
 	}
 }
 
