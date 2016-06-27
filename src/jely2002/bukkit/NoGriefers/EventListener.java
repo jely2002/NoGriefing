@@ -1,17 +1,3 @@
-package jely2002.bukkit.NoGriefers;
-
-import jely2002.bukkit.NoGriefers.Main;
-
-public class EventListener implements org.bukkit.event.Listener {
-
-	Main plugin;
-	
-	public EventListener(Main instance) {
-		plugin = instance;
-		}
-		
-		package jely2002.bukkit.NoGriefers;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
