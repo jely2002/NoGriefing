@@ -11,10 +11,12 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
+	
+		Listener listener = new EventListener(this);
 
 	@Override
 	public void onEnable() {
-		Bukkit.getPluginManager().registerEvents(this, this);
+		Bukkit.getPluginManager().registerEvents(listener, this);
 		PluginManager pm = getServer().getPluginManager();
 		Permission BreakBlocks = new Permission("ng.breakblocks");
 		Permission DropItems = new Permission("ng.dropitems");
