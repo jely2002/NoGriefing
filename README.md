@@ -1,5 +1,5 @@
-# NoGriefers
-Bukkit plugin - NoGriefers - 1.8.8 compiled
+# NoGriefing
+Bukkit plugin - NoGriefing - 1.8.8 compiled
 
 NoGriefing is an anti-grief plugin which is still under heavy development. The goal of this plugin is to keep it as simple as possible! With this plugin you can prevent people from breaking and placing blocks. You can also prevent people from dropping items.
 
