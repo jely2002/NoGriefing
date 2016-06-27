@@ -21,9 +21,15 @@ public class Main extends JavaPlugin {
 		Permission BreakBlocks = new Permission("ng.breakblocks");
 		Permission DropItems = new Permission("ng.dropitems");
 		Permission PlaceBlocks = new Permission("ng.placeblocks");
+		Permission ChangeState = new Permission("ng.setflags");
+		Permission SosMode = new Permission("ng.sosmode");
+		Permission Reload = new Permission("ng.reload");	
 		pm.addPermission(BreakBlocks);
 		pm.addPermission(DropItems);
 		pm.addPermission(PlaceBlocks);
+		pm.addPermission(ChangeState);
+		pm.addPermission(SosMode);
+		pm.addPermission(Reload);
 		this.saveDefaultConfig();
 	}
 
@@ -46,9 +52,11 @@ public class Main extends JavaPlugin {
 			if (length == 1) {
 
 				if (args[0].equalsIgnoreCase("reload")) {
+					if (p.hasPermission("Reload") {
 					this.reloadConfig();
 					p.sendMessage(ChatColor.GREEN +"Config succesfully reloaded!");
 					return true;
+					}
 				}
 
 				if (args[0].equalsIgnoreCase("help")) {
@@ -75,6 +83,7 @@ public class Main extends JavaPlugin {
 				}
 				
 				if (args[0].equalsIgnoreCase("sos")) {
+				     if (p.hasPermission("SosMode") {
 					this.getConfig().set("blockplace", false); 
 					this.getConfig().set("blockbreak", false); 
 					this.getConfig().set("itemdrops", false);
@@ -82,6 +91,7 @@ public class Main extends JavaPlugin {
 					p.sendMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Emergency mode activated. All privileges taken.");
 					Bukkit.broadcastMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Emergency mode activated. Nobody can place, break or drop items.");
 					return true;
+				     }	
 				}
 			}
 
@@ -90,6 +100,7 @@ public class Main extends JavaPlugin {
 			///}
 
 			if (length == 2) {
+			     if (p.hasPermission("ChangeState") {	
 				if (args[0].equalsIgnoreCase("blockbreak") && args[1].equalsIgnoreCase("true") ) {
 					this.getConfig().set("blockbreak", true); 
 					this.saveConfig();
@@ -131,6 +142,7 @@ public class Main extends JavaPlugin {
 					p.sendMessage(ChatColor.GREEN + "Blockplace set to false.");
 					return true;	
 				}
+			     }	
 			}
 			
 
