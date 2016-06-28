@@ -52,7 +52,7 @@ public class Main extends JavaPlugin {
 			if (length == 1) {
 
 				if (args[0].equalsIgnoreCase("reload")) {
-					if (p.hasPermission("Reload") {
+					if (p.hasPermission("Reload")) {
 					this.reloadConfig();
 					p.sendMessage(ChatColor.GREEN +"Config succesfully reloaded!");
 					return true;
@@ -83,10 +83,11 @@ public class Main extends JavaPlugin {
 				}
 				
 				if (args[0].equalsIgnoreCase("sos")) {
-				     if (p.hasPermission("SosMode") {
+				     if (p.hasPermission("SosMode")) {
 					this.getConfig().set("blockplace", false); 
 					this.getConfig().set("blockbreak", false); 
 					this.getConfig().set("itemdrops", false);
+					this.getConfig().set("antitnt", true);
 					this.saveConfig();
 					p.sendMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Emergency mode activated. All privileges taken.");
 					Bukkit.broadcastMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Emergency mode activated. Nobody can place, break or drop items.");
@@ -100,7 +101,7 @@ public class Main extends JavaPlugin {
 			///}
 
 			if (length == 2) {
-			     if (p.hasPermission("ChangeState") {	
+			     if (p.hasPermission("ChangeState")) {	
 				if (args[0].equalsIgnoreCase("blockbreak") && args[1].equalsIgnoreCase("true") ) {
 					this.getConfig().set("blockbreak", true); 
 					this.saveConfig();
@@ -140,6 +141,20 @@ public class Main extends JavaPlugin {
 					this.getConfig().set("blockplace", false); 
 					this.saveConfig();
 					p.sendMessage(ChatColor.GREEN + "Blockplace set to false.");
+					return true;	
+				}
+				
+				if (args[0].equalsIgnoreCase("antitnt") && args[1].equalsIgnoreCase("true")) {
+					this.getConfig().set("antitnt", true); 
+					this.saveConfig();
+					p.sendMessage(ChatColor.GREEN + "Anti TNT set to true.");
+					return true;
+				}
+
+				if (args[0].equalsIgnoreCase("antitnt") && args[1].equalsIgnoreCase("false")) {
+					this.getConfig().set("antitnt", false); 
+					this.saveConfig();
+					p.sendMessage(ChatColor.GREEN + "Anti TNT set to false.");
 					return true;	
 				}
 			     }	
