@@ -1,11 +1,13 @@
+package jely2002.bukkit.NoGriefers;
+
 import org.bukkit.ChatColor;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-
-import jely2002.bukkit.NoGriefers.Main;
 
 public class EventListener implements org.bukkit.event.Listener {
 
@@ -47,5 +49,15 @@ public class EventListener implements org.bukkit.event.Listener {
 			    p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("deny-message-itemdrops")));
        } else return;
 	}
+   
+	@EventHandler
+    public void antitntevent(EntityExplodeEvent e) {
+        if (plugin.getConfig().getBoolean("antittnt") && e.getEntityType() == EntityType.PRIMED_TNT) {
+            e.setCancelled(true);
+        } else return;
+    }
+	
 	}
-}
+
+
+
