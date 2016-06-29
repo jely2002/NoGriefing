@@ -1,32 +1,28 @@
-# NoGriefing
-Bukkit plugin - NoGriefing - 1.8.8 compiled
+NoGriefing is an anti-grief plugin which is still under heavy development. The goal of this plugin is to keep it as simple as possible! With this plugin you can prevent people from breaking and placing blocks. You can also prevent people from dropping items. A new feature is the logging of blocks. You can specify what blocks you want the plugin to log. If that block is placed, the plugin will put the name of the player and the block that the player placed in the config file.
 
-NoGriefing is an anti-grief plugin which is still under heavy development. The goal of this plugin is to keep it as simple as possible! With this plugin you can prevent people from breaking and placing blocks. You can also prevent people from dropping items.
+And of course you can disable TNT!
 
 Commands:
-
-- /ng blockplace <true/false> (Disable or enables blockplace)
-- /ng blockbreak <true/false> (Disable or enables blockbreak)
-- /ng itemdrops <true/false> (Disable or enables itemdrops)
+- /ng blockplace <true/false> (Disable or enables block place)
+- /ng blockbreak <true/false> (Disable or enables block break)
+- /ng itemdrops <true/false> (Disable or enables item drops)
+- /ng antitnt <true/false> (Disable or enables antitnt)
 - /ng help (Shows the help menu)
 - /ng sos (Activates emergency mode, everyone without OP cannot build, place or drop items)
+- /ng blocklog (Shows the blocklog)
+- /ng delblocklog (Empties the blocklog)
 - /ng reload (Reloads config)
 - /ng version (Shows the version of the plugin)
 Config:
-
 In the configuration file you can change most of the messages. And you can manually enable / disable the anti-grief features. Click here to see the config!
 
 Permissions:
-
-- ng.placeblocks (Bypasses the anti block place feature)
-- ng.breakblocks (Bypasses the anti block break feature)
-- ng.dropitems (Bypasses the anti item drop feature)
+- ng.placeblocks (Bypasses the anti-block place feature)
+- ng.breakblocks (Bypasses the anti-block break feature)
+- ng.dropitems (Bypasses the anti-item drop feature)
+- ng.reload (With this permission you can reload the plugin)
+- ng.sosmode (Lets you use the /ng sos command)
+- ng.setflags (Lets you enable or disable flags)
+- ng.viewblocklog (Lets you use /ng blocklog.
+- ng.delblocklog (Lets you use /ng delblocklog)
 OP's will get all of the permissions.
-
-Note
-
-If you have issues with the plugin you can report them here.
-
-The plugin was first called: NoGriefers. I still have to change the logo and some code. I'm on my phone so I cant do that right now. Tomorrow I'll upload all renamed resources.
-
-You can download the older 1.8 version here.
