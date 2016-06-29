@@ -1,6 +1,6 @@
 name: NoGriefing
-main: jely2002.bukkit.NoGriefers.Main
-version: 1.0
+main: jely2002.bukkit.NoGriefing.Main
+version: 1.4
 commands:
    ng:
     description: Alias for NoGriefing
