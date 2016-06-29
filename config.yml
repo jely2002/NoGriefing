@@ -13,7 +13,7 @@ blocks-to-be-logged:
      - Another block
 blocklog: []
 
-# Messages, you can use & colorcodes. Dont forget to start end finish the line with a ' .
+# Messages, you can use & colorcodes. Dont forget to start and finish the line with a ' .
 deny-message-blockbreak: '&c&lYou cannot break this block..'
 deny-message-itemdrops: '&c&lYou cannot drop items..'
 deny-message-blockplace: '&c&lYou cannot place this block..'
