@@ -3,26 +3,21 @@ NoGriefing is an anti-grief plugin which is still under heavy development. The g
 And of course you can disable TNT!
 
 Commands:
-- /ng blockplace <true/false> (Disable or enables block place)
-- /ng blockbreak <true/false> (Disable or enables block break)
-- /ng itemdrops <true/false> (Disable or enables item drops)
-- /ng antitnt <true/false> (Disable or enables antitnt)
+- /ng settings (Opens the plugin management GUI)
 - /ng help (Shows the help menu)
 - /ng sos (Activates emergency mode, everyone without OP cannot build, place or drop items)
 - /ng blocklog (Shows the blocklog)
 - /ng delblocklog (Empties the blocklog)
 - /ng reload (Reloads config)
 - /ng version (Shows the version of the plugin)
-Config:
-In the configuration file you can change most of the messages. And you can manually enable / disable the anti-grief features. Click here to see the config!
 
 Permissions:
-- ng.placeblocks (Bypasses the anti-block place feature)
-- ng.breakblocks (Bypasses the anti-block break feature)
-- ng.dropitems (Bypasses the anti-item drop feature)
+- ng.placeblocks (Bypasses the anti block place feature)
+- ng.breakblocks (Bypasses the anti block break feature)
+- ng.dropitems (Bypasses the anti item drop feature)
 - ng.reload (With this permission you can reload the plugin)
 - ng.sosmode (Lets you use the /ng sos command)
-- ng.setflags (Lets you enable or disable flags)
+- ng.setflags (Lets you use the /ng settings command)
 - ng.viewblocklog (Lets you use /ng blocklog.
 - ng.delblocklog (Lets you use /ng delblocklog)
 OP's will get all of the permissions.
