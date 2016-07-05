@@ -1,5 +1,6 @@
 package jely2002.bukkit.NoGriefing;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,14 +9,20 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import jely2002.bukkit.NoGriefing.Updater.UpdateResult;
+import jely2002.bukkit.NoGriefing.Updater.UpdateType;
+import jely2002.bukkit.NoGriefing.Updater;
+
 public class Main extends JavaPlugin {
-	
+
+	public boolean uptodate;
 	private Menu menu;
 	public HashMap<OfflinePlayer, String> logger = new HashMap<OfflinePlayer, String>();
 	public List<String> loggedblocks = (List<String>) this.getConfig().getStringList("blocks-to-be-logged");
@@ -35,7 +42,10 @@ public class Main extends JavaPlugin {
 		Permission Reload = new Permission("ng.reload");
 		Permission Blocklog = new Permission("ng.viewblocklog");
 		Permission DelBlocklog = new Permission("ng.delblocklog");
+		Permission use = new Permission("ng.openinventory");
+		Permission PvP = new Permission("ng.pvp");
 		pm.addPermission(BreakBlocks);
+		pm.addPermission(use);
 		pm.addPermission(DropItems);
 		pm.addPermission(PlaceBlocks);
 		pm.addPermission(ChangeState);
@@ -43,7 +53,10 @@ public class Main extends JavaPlugin {
 		pm.addPermission(Reload);
 		pm.addPermission(Blocklog);
 		pm.addPermission(DelBlocklog);
-		this.saveDefaultConfig();
+		pm.addPermission(PvP);
+		FileConfiguration config = this.getConfig();
+		config.options().copyDefaults(true);
+		this.saveConfig();
 		getLogger().info("--------------+ NoGriefing +---------------");
 		getLogger().info("       NoGriefing is succesfully enabled!  ");
 		getLogger().info("        Thank you for using NoGriefing!    ");
@@ -51,6 +64,27 @@ public class Main extends JavaPlugin {
 		getLogger().info("         By: Jely2002 - Open source!       ");
 		getLogger().info("--------------+ NoGriefing +---------------");
 
+		//Start metrics
+		try {
+			Metrics metrics = new Metrics(this);
+			metrics.start();
+		} catch (IOException e) {
+			getLogger().warning("Could not connect to MCStats.com");
+		}
+
+		//Start updater
+		if (this.getConfig().getBoolean("update-check")) {
+			Updater updatechecker = new Updater(this, 100722, getFile(), UpdateType.NO_DOWNLOAD, true);
+			if (updatechecker.getResult().equals(UpdateResult.UPDATE_AVAILABLE)) {
+				getLogger().info("There is an update available!");
+				getLogger().info("Download it now at the plugin page:");
+				getLogger().info("http://dev.bukkit.org/bukkit-plugins/antigrief-nogriefers/");
+				uptodate = false;
+			} else {
+				getLogger().info("You are running the latest version of NoGriefing!");
+				uptodate = true;
+			}
+		}
 
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
@@ -74,7 +108,7 @@ public class Main extends JavaPlugin {
 		}
 		getConfig().set("blocklog", blocklist);
 		saveConfig();
-		getLogger().info("---------+ Thanks for using NoGriefing - Succesfully disabled +---------");
+		getLogger().info("---+ Thanks for using NoGriefing - Succesfully disabled +---");
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -93,6 +127,7 @@ public class Main extends JavaPlugin {
 				if (args[0].equalsIgnoreCase("reload")) {
 					if (p.hasPermission("Reload")) {
 						this.reloadConfig();
+						this.saveConfig();
 						p.sendMessage(ChatColor.GREEN +"Config succesfully reloaded!");
 					} else p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("no-permission-message")));
 					return true;
@@ -105,7 +140,7 @@ public class Main extends JavaPlugin {
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng sos");
 					p.sendMessage(ChatColor.GRAY + "Activates emergency mode.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng settings");
-					p.sendMessage(ChatColor.GRAY + "Opens a GUI where you can enable or disable: block break/place, item-drops and antitnt.");
+					p.sendMessage(ChatColor.GRAY + "Opens a GUI where you can enable or disable all the anti-grief features.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng blocklog");
 					p.sendMessage(ChatColor.GRAY + "Shows the blocklog.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng version");
@@ -156,10 +191,10 @@ public class Main extends JavaPlugin {
 					}  else p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("no-permission-message")));
 					return true;
 				}
-				
+
 				if (args[0].equalsIgnoreCase("settings")) {
 					if (p.hasPermission("ChangeState")) {
-					p.openInventory(Menu.settingsgui);
+						p.openInventory(Menu.settingsgui);
 					}  else p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("no-permission-message")));
 					return true;
 				}
