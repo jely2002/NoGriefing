@@ -44,9 +44,11 @@ public class Main extends JavaPlugin {
 		Permission DelBlocklog = new Permission("ng.delblocklog");
 		Permission use = new Permission("ng.openinventory");
 		Permission PvP = new Permission("ng.pvp");
+		Permission PickupItems = new Permission("ng.pickupitems");
 		pm.addPermission(BreakBlocks);
 		pm.addPermission(use);
 		pm.addPermission(DropItems);
+		pm.addPermission(PickupItems);
 		pm.addPermission(PlaceBlocks);
 		pm.addPermission(ChangeState);
 		pm.addPermission(SosMode); 
