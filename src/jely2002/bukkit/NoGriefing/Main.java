@@ -73,8 +73,9 @@ public class Main extends JavaPlugin {
 		}
 
 		//Start updater
-		if (this.getConfig().getBoolean("update-check")) {
+		if (getConfig().getBoolean("update-check")) {
 			Updater updatechecker = new Updater(this, 100722, getFile(), UpdateType.NO_DOWNLOAD, true);
+			if (getConfig().getBoolean("update-check"))
 			if (updatechecker.getResult().equals(UpdateResult.UPDATE_AVAILABLE)) {
 				getLogger().info("There is an update available!");
 				getLogger().info("Download it now at the plugin page:");
@@ -204,4 +205,5 @@ public class Main extends JavaPlugin {
 
 	}
 }
+// Test (Hope this shows up on GitHub! XOXO)
 // Test (Hope this shows up on GitHub! XOXO)
