@@ -55,25 +55,6 @@ public class EventListener implements org.bukkit.event.Listener {
 		} else return;
 	}
 
-	//@EventHandler
-	//public void bucketfill(PlayerBucketFillEvent e) {
-	//	final Player p = e.getPlayer();
-	//	if (plugin.getConfig().getBoolean("blockbreak") == false  && !p.hasPermission("BreakBlock") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getPlayer().getWorld().getName())) {
-	//		e.setCancelled(true);
-	//		if (!cooldown.contains(p)) {
-	//			cooldown.add(p);
-	//			e.setCancelled(true);
-	//			p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("deny-message-blockbreak")));
-	//			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-	//				public void run() {
-	//					cooldown.remove(p);
-	//				}
-	//			}, 30);			  		 
-	//		}		
-	//	} else return;
-//	}
-
-
 	@EventHandler
 	public void blockplace(BlockPlaceEvent e) {
 		final Player p = e.getPlayer();
