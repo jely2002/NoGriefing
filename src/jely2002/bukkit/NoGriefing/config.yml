@@ -1,0 +1,21 @@
+# NoGriefing - Configuration file. If a new plugin version comes out and you experience errors, please copy the config.yml from github.
+blockbreak: true
+blocklog: []
+blocklog-save-interval: 60
+blockplace: true
+pvp: true
+blocks-to-be-logged: []
+deny-message-blockbreak: "&c&lYou cannot break this block.."
+deny-message-blockplace: "&c&lYou cannot place this block.."
+deny-message-itemdrops: "&c&lYou cannot drop items.."
+deny-message-itempickup: "&c&lYou cannot pickup items.."
+deny-message-use: "&c&lYou cannot use this here.."
+deny-message-bow: "&c&lYou cannot shoot here.."
+deny-message-pvp: "&c&lYou cannot damage a %s here.."
+disabled-worlds: []
+enable-blocklog: false
+itemdrops: true
+itempickup: true
+inventory-use: true
+no-permission-message: "&c&lYou dont have the permission to use this command.."
+update-check: true
