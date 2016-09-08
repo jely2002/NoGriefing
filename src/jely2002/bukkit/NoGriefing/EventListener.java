@@ -12,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
@@ -184,7 +186,7 @@ public class EventListener implements org.bukkit.event.Listener {
 	
 	@EventHandler
 	public void nodamage(EntityDamageByEntityEvent e) {
-		if (plugin.getConfig().getBoolean("antitnt") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getDamager().getLocation().getWorld().getName())) {
+		if (plugin.getConfig().getBoolean("pvp") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getDamager().getLocation().getWorld().getName())) {
 			if (e.getDamager() instanceof Player) {
 				if (!e.getDamager().hasPermission("pvp")) {
 					final Player p = (Player) e.getDamager();
@@ -204,8 +206,21 @@ public class EventListener implements org.bukkit.event.Listener {
 	}
 	
 	@EventHandler
+	public void noentityeffects(EntityDamageEvent e) {
+		if (plugin.getConfig().getBoolean("pvp") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
+			if (e.getEntity() instanceof Player) {
+				if (!e.getEntity().hasPermission("pvp")) {
+					if (e.getCause() == DamageCause.WITHER || e.getCause() == DamageCause.DRAGON_BREATH || e.getCause() == DamageCause.ENTITY_ATTACK || e.getCause() == DamageCause.ENTITY_EXPLOSION || e.getCause() == DamageCause.MAGIC) {
+					e.setCancelled(true);
+					}
+				}
+			}
+		} else return;
+	}
+	
+	@EventHandler
 	public void noarrowdamage(EntityShootBowEvent e) {
-		if (plugin.getConfig().getBoolean("antitnt") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
+		if (plugin.getConfig().getBoolean("pvp") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
 			if (e.getEntity() instanceof Player) {
 				if (!e.getEntity().hasPermission("pvp")) {
 					final Player p = (Player) e.getEntity();
@@ -225,6 +240,32 @@ public class EventListener implements org.bukkit.event.Listener {
 	}
 	
 	@EventHandler
+	public void nofalldamage(EntityDamageEvent e) {
+		if (plugin.getConfig().getBoolean("no-falldamage") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
+			if (e.getEntity() instanceof Player) {
+				if (!e.getEntity().hasPermission("fall")) {
+					if (e.getCause() == DamageCause.FALL || e.getCause() == DamageCause.CONTACT) {
+					e.setCancelled(true);
+					}
+				}
+			}
+		} else return;
+	}
+	
+	@EventHandler
+	public void nofireanddrowndamage(EntityDamageEvent e) {
+		if (plugin.getConfig().getBoolean("no-fire-drowning") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
+			if (e.getEntity() instanceof Player) {
+				if (!e.getEntity().hasPermission("fire-water")) {
+					if (e.getCause() == DamageCause.DROWNING || e.getCause() == DamageCause.FIRE || e.getCause() == DamageCause.FIRE_TICK || e.getCause() == DamageCause.LIGHTNING || e.getCause() == DamageCause.HOT_FLOOR || e.getCause() == DamageCause.LAVA) {
+					e.setCancelled(true);
+					}
+				}
+			}
+		} else return;
+	}
+	
+	@EventHandler
 	public void joinupdate(PlayerJoinEvent e) {	
 		Player p = e.getPlayer();
 		if (plugin.uptodate == false && plugin.getConfig().getBoolean("update-check") && p.isOp()) {
@@ -234,6 +275,5 @@ public class EventListener implements org.bukkit.event.Listener {
 		} else return;
 	}
 }
-
 
 
