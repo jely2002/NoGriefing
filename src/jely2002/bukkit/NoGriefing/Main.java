@@ -207,5 +207,3 @@ public class Main extends JavaPlugin {
 
 	}
 }
-// Test (Hope this shows up on GitHub! XOXO)
-// Test (Hope this shows up on GitHub! XOXO)

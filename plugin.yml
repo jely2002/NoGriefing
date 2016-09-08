@@ -1,6 +1,9 @@
 name: NoGriefing
 main: jely2002.bukkit.NoGriefing.Main
 version: 1.6
+description: No-Griefing lets you disable block place, block break, TNT, PvP and much more!
+author: Jely2002
+website: http://http://dev.bukkit.org/bukkit-plugins/antigrief-nogriefers/
 commands:
    ng:
     description: Alias for NoGriefing
