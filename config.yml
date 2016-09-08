@@ -16,6 +16,9 @@ disabled-worlds: []
 enable-blocklog: false
 itemdrops: true
 itempickup: true
+no-falldamage: true
+no-fire-drowning: true
 inventory-use: true
 no-permission-message: "&c&lYou dont have the permission to use this command.."
 update-check: true
+
