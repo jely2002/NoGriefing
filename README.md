@@ -1,8 +1,7 @@
 
-------------------------- NOTE -------------------------
+NOTE
 This version has not been fully tested! If you want a stable build please download from the plugin page.
 Thank you, Jely2002.
-------------------------- NOTE -------------------------
 
 
 NoGriefing is an anti-grief plugin which is still under heavy development. The goal of this plugin is to keep it as simple as possible! With this plugin you can prevent people from breaking and placing blocks. You can also prevent people from dropping items. A new feature is the logging of blocks. You can specify what blocks you want the plugin to log. If that block is placed, the plugin will put the name of the player and the block that the player placed in the config file. Its possible to disable the plugin in certain worlds, which you can specify in the config. This is helpful if you have a lobby world and a survival world.
