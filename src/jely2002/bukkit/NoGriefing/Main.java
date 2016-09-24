@@ -1,5 +1,3 @@
-package jely2002.bukkit.NoGriefing;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -38,24 +36,34 @@ public class Main extends JavaPlugin {
 		Permission DropItems = new Permission("ng.dropitems");
 		Permission PlaceBlocks = new Permission("ng.placeblocks");
 		Permission ChangeState = new Permission("ng.setflags");
-		Permission SosMode = new Permission("ng.sosmode");
+		Permission adddisabled = new Permission("ng.adddisabledworlds");
+		Permission Hunger = new Permission("ng.hunger");
+		Permission FallDamage = new Permission("ng.falldamage");
+		Permission Fire = new Permission("ng.fire");
+		Permission Drowning = new Permission("ng.drowning");
 		Permission Reload = new Permission("ng.reload");
 		Permission Blocklog = new Permission("ng.viewblocklog");
 		Permission DelBlocklog = new Permission("ng.delblocklog");
 		Permission use = new Permission("ng.openinventory");
 		Permission PvP = new Permission("ng.pvp");
 		Permission ItemPickup = new Permission("ng.itempickup");
+		Permission toolUse = new Permission("ng.use");
 		pm.addPermission(BreakBlocks);
 		pm.addPermission(use);
+		pm.addPermission(toolUse);
 		pm.addPermission(DropItems);
 		pm.addPermission(ItemPickup);
 		pm.addPermission(PlaceBlocks);
 		pm.addPermission(ChangeState);
-		pm.addPermission(SosMode); 
+		pm.addPermission(adddisabled); 
 		pm.addPermission(Reload);
 		pm.addPermission(Blocklog);
 		pm.addPermission(DelBlocklog);
 		pm.addPermission(PvP);
+		pm.addPermission(Hunger);
+		pm.addPermission(FallDamage);
+		pm.addPermission(Fire);
+		pm.addPermission(Drowning);
 		FileConfiguration config = this.getConfig();
 		config.options().copyDefaults(true);
 		this.saveConfig();
@@ -140,12 +148,12 @@ public class Main extends JavaPlugin {
 					p.sendMessage(ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + " " + ChatColor.GREEN.toString() + ChatColor.BOLD + "NoGriefing" + " " + ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + "");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng help");
 					p.sendMessage(ChatColor.GRAY + "Opens this help menu. ");
-					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng sos");
-					p.sendMessage(ChatColor.GRAY + "Activates emergency mode.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng settings");
-					p.sendMessage(ChatColor.GRAY + "Opens a GUI where you can enable or disable all the anti-grief features.");
+					p.sendMessage(ChatColor.GRAY + "Opens a GUI where you can enable or disable all of the anti-grief features.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng blocklog");
 					p.sendMessage(ChatColor.GRAY + "Shows the blocklog.");
+					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng adddisabled");
+					p.sendMessage(ChatColor.GRAY + "Adds the world your in to the disabled worlds list.");
 					p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "/ng version");
 					p.sendMessage(ChatColor.GRAY + "Shows the version of the plugin.");
 					p.sendMessage(ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + " " + ChatColor.GREEN.toString() + ChatColor.BOLD + "By: Jely2002" + " " + ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "==========" + "");
@@ -154,19 +162,6 @@ public class Main extends JavaPlugin {
 
 				if (args[0].equalsIgnoreCase("version")) {
 					p.sendMessage(ChatColor.GREEN + "NoGriefing is on version: " + ChatColor.YELLOW + getDescription().getVersion());
-					return true;
-				}
-
-				if (args[0].equalsIgnoreCase("sos")) {
-					if (p.hasPermission("SosMode")) {
-						this.getConfig().set("blockplace", false); 
-						this.getConfig().set("blockbreak", false); 
-						this.getConfig().set("itemdrops", false);
-						this.getConfig().set("antitnt", true);
-						this.saveConfig();
-						p.sendMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Emergency mode activated. All privileges taken.");
-						Bukkit.broadcastMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Emergency mode activated. Nobody can place, break or drop items.");
-					} else p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("no-permission-message")));
 					return true;
 				}
 
@@ -201,9 +196,18 @@ public class Main extends JavaPlugin {
 					}  else p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("no-permission-message")));
 					return true;
 				}
+				
+				if (args[0].equalsIgnoreCase("adddisabled")) {
+					if (p.hasPermission("adddisabled")) {
+						List<String> disabledworlds = (List<String>) this.getConfig().getStringList("disabled-worlds");
+						disabledworlds.add(p.getWorld().getName());
+						getConfig().set("disabled-worlds", disabledworlds);
+						p.sendMessage(ChatColor.GREEN + "Added the world" + p.getWorld().getName() + "to the disabled worlds!");
+					}  else p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("no-permission-message")));
+					return true;
+				}
 			}
 		}
 		return false;
 
 	}
-}
