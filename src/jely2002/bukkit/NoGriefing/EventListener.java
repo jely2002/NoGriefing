@@ -5,10 +5,12 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -17,12 +19,16 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerShearEntityEvent;
 
 import jely2002.bukkit.NoGriefing.Main;
 
@@ -36,6 +42,8 @@ public class EventListener implements org.bukkit.event.Listener {
 	}
 
 
+	//-------------------------------------- No block place/break (blockplace / blockbreak) ----------------------------------//
+	
 	@EventHandler
 	public void blockbreak(BlockBreakEvent e) {
 		final Player p = e.getPlayer();
@@ -55,6 +63,15 @@ public class EventListener implements org.bukkit.event.Listener {
 				e.setCancelled(true);	
 			}
 		} else return;
+	}
+	
+	@EventHandler
+	public void noUproot(PlayerInteractEvent e)	{
+		if (plugin.getConfig().getBoolean("blockbreak") == false && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getPlayer().getWorld().getName())){
+			if (!e.getPlayer().hasPermission("BreakBlocks"))
+				if(e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType() == Material.SOIL)
+					e.setCancelled(true);
+		}
 	}
 
 	@EventHandler
@@ -76,7 +93,7 @@ public class EventListener implements org.bukkit.event.Listener {
 		} else return;
 	}
 
-
+    //disables lava or water grief.
     @EventHandler
     public void BucketEmpty(PlayerBucketEmptyEvent e) {
         final Player p = e.getPlayer();
@@ -95,8 +112,9 @@ public class EventListener implements org.bukkit.event.Listener {
         }
     }
     
+    //disables lava or water grief.
     @EventHandler
-    public void BucketEmpty(PlayerBucketFillEvent e) {
+    public void BucketFill(PlayerBucketFillEvent e) {
         final Player p = e.getPlayer();
         if (plugin.getConfig().getBoolean("blockbreak") == false && !p.hasPermission("BreakBlocks") && !plugin.getConfig().getStringList("disabled-worlds").contains(p.getWorld().getName())) {
 			if (!cooldown.contains(p)) {
@@ -113,6 +131,8 @@ public class EventListener implements org.bukkit.event.Listener {
     }
 
 
+	//------------------------------------- No item pickup (itempickup) ----------------------------------//
+    
 	@EventHandler
 	public void pickupitems(PlayerPickupItemEvent e) {
 		final Player p = e.getPlayer();
@@ -129,7 +149,9 @@ public class EventListener implements org.bukkit.event.Listener {
 			e.setCancelled(true);
 		} else return;
 	}
-
+	
+	//-------------------------------------- No item drop (itemdrops) ----------------------------------//
+	
 	@EventHandler
 	public void dropitems(PlayerDropItemEvent e) {
 		final Player p = e.getPlayer();
@@ -147,6 +169,8 @@ public class EventListener implements org.bukkit.event.Listener {
 		} else return;
 	}
 
+	//-------------------------------------- No tnt (antitnt) ----------------------------------//
+	
 	@EventHandler
 	public void antitntevent(EntityExplodeEvent e) {
 		if (plugin.getConfig().getBoolean("antittnt") && e.getEntityType() == EntityType.PRIMED_TNT && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getLocation().getWorld().getName())) {
@@ -161,7 +185,8 @@ public class EventListener implements org.bukkit.event.Listener {
 		} else return;
 	}
 
-
+	//-------------------------------------- No inventory use (inventory-use) ----------------------------------//
+	
 	@EventHandler
 	public void use(InventoryOpenEvent e) {
 		HumanEntity p = e.getPlayer();
@@ -172,6 +197,8 @@ public class EventListener implements org.bukkit.event.Listener {
 			}
 		} else return;
 	}
+	
+	//-------------------------------------- Block logger (blocklog) ----------------------------------//
 
 	@EventHandler
 	public void blocklogger(BlockPlaceEvent e) {	
@@ -183,6 +210,8 @@ public class EventListener implements org.bukkit.event.Listener {
 			} 
 		}	
 	}
+	
+	//--------------------------------------- No arrow damage & no pvp & no entity effects/attacks (pvp) ----------------------------------//
 	
 	@EventHandler
 	public void nodamage(EntityDamageByEntityEvent e) {
@@ -218,6 +247,7 @@ public class EventListener implements org.bukkit.event.Listener {
 		} else return;
 	}
 	
+	
 	@EventHandler
 	public void noarrowdamage(EntityShootBowEvent e) {
 		if (plugin.getConfig().getBoolean("pvp") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
@@ -239,11 +269,13 @@ public class EventListener implements org.bukkit.event.Listener {
 		} else return;
 	}
 	
+	//--------------------------------------Fall damage negater (falldamage) ----------------------------------//
+	
 	@EventHandler
 	public void nofalldamage(EntityDamageEvent e) {
-		if (plugin.getConfig().getBoolean("no-falldamage") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
+		if (plugin.getConfig().getBoolean("falldamage") == false && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
 			if (e.getEntity() instanceof Player) {
-				if (!e.getEntity().hasPermission("fall")) {
+				if (!e.getEntity().hasPermission("FallDamage")) {
 					if (e.getCause() == DamageCause.FALL || e.getCause() == DamageCause.CONTACT) {
 					e.setCancelled(true);
 					}
@@ -252,18 +284,83 @@ public class EventListener implements org.bukkit.event.Listener {
 		} else return;
 	}
 	
+	//--------------------------------------- Drowning (drowning) ----------------------------------//
+	
 	@EventHandler
-	public void nofireanddrowndamage(EntityDamageEvent e) {
-		if (plugin.getConfig().getBoolean("no-fire-drowning") && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
+	public void nodrowndamage(EntityDamageEvent e) {
+		if (plugin.getConfig().getBoolean("drowning") == false && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
 			if (e.getEntity() instanceof Player) {
-				if (!e.getEntity().hasPermission("fire-water")) {
-					if (e.getCause() == DamageCause.DROWNING || e.getCause() == DamageCause.FIRE || e.getCause() == DamageCause.FIRE_TICK || e.getCause() == DamageCause.LIGHTNING || e.getCause() == DamageCause.HOT_FLOOR || e.getCause() == DamageCause.LAVA) {
+				if (!e.getEntity().hasPermission("Drowning")) {
+					if (e.getCause() == DamageCause.DROWNING) {
 					e.setCancelled(true);
 					}
 				}
 			}
 		} else return;
 	}
+	
+	//--------------------------------------- Fire & related (fire) ----------------------------------//
+	
+	@EventHandler
+	public void nofiredamage(EntityDamageEvent e) {
+		if (plugin.getConfig().getBoolean("fire") == false && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
+			if (e.getEntity() instanceof Player) {
+				if (!e.getEntity().hasPermission("Fire")) {
+					if (e.getCause() == DamageCause.FIRE || e.getCause() == DamageCause.FIRE_TICK || e.getCause() == DamageCause.LIGHTNING || e.getCause() == DamageCause.HOT_FLOOR || e.getCause() == DamageCause.LAVA) {
+					e.setCancelled(true);
+					}
+				}
+			}
+		} else return;
+	}
+	
+	//--------------------------------------- hunger (hunger) ----------------------------------//
+	
+	@EventHandler
+	public void nohunger(FoodLevelChangeEvent e) {
+		if (plugin.getConfig().getBoolean("hunger") == false && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getEntity().getLocation().getWorld().getName())) {
+			if (e.getEntity() instanceof Player) {
+				if (!e.getEntity().hasPermission("Hunger")) {
+					e.setCancelled(true);
+				}
+			}
+		} else return;
+	}
+	
+	//--------------------------------------- tool-use (tool-use) ----------------------------------//
+	
+	@EventHandler
+	public void noshears(PlayerShearEntityEvent e) {
+		if (plugin.getConfig().getBoolean("tool-use") == false && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getPlayer().getLocation().getWorld().getName())) {
+			if (!e.getPlayer().hasPermission("tool-use")) {
+				e.setCancelled(true);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void nofishing(PlayerFishEvent e) {
+		if (plugin.getConfig().getBoolean("tool-use") == false && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getPlayer().getLocation().getWorld().getName())) {
+			if (!e.getPlayer().hasPermission("tool-use")) {
+				e.setCancelled(true);
+			}
+		}
+	}
+	
+	
+	@EventHandler
+	public void notrampling(PlayerInteractEvent e)	{
+		if (plugin.getConfig().getBoolean("tool-use") == false && !plugin.getConfig().getStringList("disabled-worlds").contains(e.getPlayer().getWorld().getName())){
+			if (!e.getPlayer().hasPermission("tool-use"))
+				if(e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.GRASS)
+					e.setCancelled(true);
+		}
+	}
+
+	
+
+	
+	//------------------------------------------- Updater -----------------------------------------------//
 	
 	@EventHandler
 	public void joinupdate(PlayerJoinEvent e) {	
@@ -275,5 +372,3 @@ public class EventListener implements org.bukkit.event.Listener {
 		} else return;
 	}
 }
-
-
